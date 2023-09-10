@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+    app:
+        build:
+            args:
+                user: sammy
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: pbmovie
+        container_name: pbmovie-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - pbmovie
+    db:
+        image: mysql:5.7
+        container_name: pbmovie-db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: db
+            MYSQL_USER: dbuser
+            MYSQL_PASSWORD: user123
+        ports:
+            - 3306:3306
+    # container for UI database management
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: pbmovie-phpmyadmin
+        restart: unless-stopped
+        ports:
+            - 9029:80
+        depends_on:
+            - db
+        environment:
+            PMA_HOSTS: db
+            PMA_USER: dbuser
+            PMA_PASSWORD: user123
+    nginx:
+        image: nginx:1.17-alpine
+        container_name: pbmovie-nginx
+        restart: unless-stopped
+        ports:
+            - 8000:8089
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d
+networks:
+    pbmovie:
+        driver: bridge
