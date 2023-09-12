@@ -51,4 +51,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         // TODO: Implement deleteById() method.
     }
+
+    public function getBasicInfoById($id)
+    {
+        return User::select('email', 'full_name', 'created_at')
+            ->where('id', $id)
+            ->first();
+    }
 }
