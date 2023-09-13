@@ -4,9 +4,7 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\UserRepository;
 use App\Entities\User;
-use App\Validators\UserValidator;
 
 /**
  * Class UserRepositoryEloquent.
@@ -34,7 +32,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function fetchUsers(): \Illuminate\Database\Eloquent\Collection
+    public function fetchUsers()
     {
         return User::all(array('full_name', 'email', 'created_at'));
     }
