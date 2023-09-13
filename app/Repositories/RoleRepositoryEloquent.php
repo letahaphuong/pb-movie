@@ -46,6 +46,7 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
             ->join('users', 'users.id', '=', 'user_roles.user_id')
             ->where('users.id', $id)
             ->get();
+
         return $roleNames[0];
     }
 }
