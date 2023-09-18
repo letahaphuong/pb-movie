@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\MediaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,6 @@ Route::prefix("v1/auth")->controller(AuthController::class)->group(function () {
 
 Route::middleware(['login'])->group(function () {
     Route::get('v1/me', [ProfileController::class, 'getProfile']);
+    Route::post('v1/media', [MediaController::class, 'uploadMedia']);
 });
 
