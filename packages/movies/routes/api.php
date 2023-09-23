@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Package\MovieType\Http\Controllers\MovieTypeController;
+use Package\Movie\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,8 @@ use Package\MovieType\Http\Controllers\MovieTypeController;
 |
 */
 
-Route::prefix("api/v1/movie-types")->controller(MovieTypeController::class)->group(function () {
+Route::prefix("api/v1/movies")->controller(MovieController::class)->group(function () {
     Route::middleware('admin')->group(function () {
     });
-    Route::get('', 'fetchMovieType');
+    Route::get('', 'fetchMovie');
 });
