@@ -1,0 +1,29 @@
+{
+    "name": "packages/countries",
+    "description": "Package Countries",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "phuonglth",
+            "email": "letahaphuong@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Package\\Country\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\Country\\Providers\\CountryServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

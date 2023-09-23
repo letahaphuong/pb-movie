@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Package\Category\Http\Controllers\CategoriesController;
+use Package\Country\Http\Controllers\CountriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +14,12 @@ use Package\Category\Http\Controllers\CategoriesController;
 |
 */
 
-Route::prefix("api/v1/categories")->controller(CategoriesController::class)->group(function () {
+Route::prefix("api/v1/countries")->controller(CountriesController::class)->group(function () {
     Route::middleware('admin')->group(function () {
-        Route::post('add', 'createCategory');
-        Route::get('detail/{id}', 'getCategory');
-        Route::put('update', 'updateCategory');
-        Route::delete('delete/{id}', 'deleteCategory');
+        Route::post('add', 'createCountry');
+        Route::post('detail/{id}', 'getCountry');
+        Route::put('update', 'updateCountry');
+        Route::delete('delete/{id}', 'deleteCountry');
     });
-    Route::get('', 'fetchCategory');
+    Route::get('', 'fetchCountry');
 });

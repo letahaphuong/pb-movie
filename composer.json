@@ -38,7 +38,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Package\\Category\\": "packages/categories/src"
+            "Package\\Category\\": "packages/categories/src",
+            "Package\\Country\\": "packages/countries/src"
         },
         "files": [
             "app/Http/common/helpers/SecurityHelper.php",
