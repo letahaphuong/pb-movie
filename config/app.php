@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         \Package\Category\Providers\CategoryServiceProvider::class,
+        \Package\Country\Providers\CountryServiceProvider::class,
     ])->toArray(),
 
     /*
