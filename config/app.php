@@ -171,6 +171,7 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         \Package\Category\Providers\CategoryServiceProvider::class,
         \Package\Country\Providers\CountryServiceProvider::class,
+        \Package\MovieType\Providers\MovieTypeServiceProvider::class
     ])->toArray(),
 
     /*
