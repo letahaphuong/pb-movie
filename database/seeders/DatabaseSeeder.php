@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             UserRoleSeeder::class,
             CategorySeeder::class,
-            CountrySeeder::class
+            CountrySeeder::class,
+            MoiveTypeSeeder::class
         ]);
     }
 }

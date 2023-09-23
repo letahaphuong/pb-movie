@@ -39,7 +39,8 @@
         "psr-4": {
             "Tests\\": "tests/",
             "Package\\Category\\": "packages/categories/src",
-            "Package\\Country\\": "packages/countries/src"
+            "Package\\Country\\": "packages/countries/src",
+            "Package\\MovieType\\": "packages/movie-types/src"
         },
         "files": [
             "app/Http/common/helpers/SecurityHelper.php",
