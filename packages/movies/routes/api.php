@@ -16,6 +16,7 @@ use Package\Movie\Http\Controllers\MovieController;
 
 Route::prefix("api/v1/movies")->controller(MovieController::class)->group(function () {
     Route::middleware('admin')->group(function () {
+        Route::post('', 'addMovie');
     });
     Route::get('', 'fetchMovie');
 });

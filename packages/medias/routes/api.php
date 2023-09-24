@@ -16,6 +16,6 @@ use Package\Media\Http\Controllers\MediaController;
 
 Route::prefix("api/v1/medias")->controller(MediaController::class)->group(function () {
     Route::middleware('admin')->group(function () {
+        Route::post('', 'uploadMedia');
     });
-    Route::get('', 'uploadMedia');
 });
