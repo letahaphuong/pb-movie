@@ -27,7 +27,7 @@ class MovieController extends Controller
 
     public function addMovie(MovieFormRequest $request)
     {
-        Log::info("Add new movie with data #{$request->all()}");
+        Log::info("Add new movie with data #{$request->name}");
 
         $movieId = $this->createMovie($request->all());
         $this->saveMedia($request, $movieId);
