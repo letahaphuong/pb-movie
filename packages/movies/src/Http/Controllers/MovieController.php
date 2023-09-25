@@ -2,6 +2,7 @@
 
 namespace Package\Movie\Http\Controllers;
 
+use App\Enums\MovieType;
 use App\Enums\SourceType;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,13 @@ class MovieController extends Controller
         $this->mediaService = $mediaService;
         $this->movieRepository = $movieRepository;
         $this->movieEpisodeRepository = $movieEpisodeRepository;
+    }
+
+    public function fetchMovieWithMovieType()
+    {
+        Log::info("Fetch movie for add new episode movie");
+
+        return $this->movieRepository->fetchMovieWithMovieType(MovieType::FEATURE_FILM);
     }
 
     public function addMovie(MovieFormRequest $request)

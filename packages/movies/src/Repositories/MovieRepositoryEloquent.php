@@ -18,4 +18,9 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    public function fetchMovieWithMovieType($movieType)
+    {
+        return Movie::select('id', 'name')->where('movie_type_id' , $movieType)->get();
+    }
 }
