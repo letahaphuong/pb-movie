@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,8 @@ Route::prefix("v1/auth")->controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->middleware('login');
     Route::post('refresh', 'refresh');
 });
+
+Route::middleware(['login'])->group(function () {
+    Route::get('v1/me', [ProfileController::class, 'getProfile']);
+});
+

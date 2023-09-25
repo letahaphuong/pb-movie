@@ -15,4 +15,5 @@ interface UserRepository extends RepositoryInterface
     public function getUserById($id);
     public function saveUser($user);
     public function deleteById($id);
+    public function getBasicInfoById($id);
 }
