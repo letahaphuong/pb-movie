@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Package\Movie\Http\Controllers\MovieController;
+use Package\Movie\Http\Controllers\MovieEpisodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,10 @@ Route::prefix("api/v1/movies")->controller(MovieController::class)->group(functi
         Route::get('movies-with-types', 'fetchMovieWithMovieType');
     });
     Route::get('', 'fetchMovie');
+});
+
+Route::prefix("api/v1/movie-episodes")->controller(MovieEpisodeController::class)->group(function () {
+    Route::middleware('admin')->group(function () {
+        Route::post('', 'addMovieEpisode');
+    });
 });
