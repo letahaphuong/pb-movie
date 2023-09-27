@@ -1,0 +1,29 @@
+{
+    "name": "packages/categories",
+    "description": "Package Categories",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "phuonglth",
+            "email": "letahaphuong@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Package\\Category\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\Category\\Providers\\CategoryServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

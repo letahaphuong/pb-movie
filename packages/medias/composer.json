@@ -1,0 +1,29 @@
+{
+    "name": "packages/medias",
+    "description": "Package Media",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "phuonglth",
+            "email": "letahaphuong@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Package\\Media\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\Media\\Providers\\MediaServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}
