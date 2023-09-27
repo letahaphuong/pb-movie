@@ -21,6 +21,6 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
 
     public function fetchMovieWithMovieType($movieType)
     {
-        return Movie::select('id', 'name')->where('movie_type_id' , $movieType)->get();
+        return Movie::select('id', 'name')->where('movie_type_id', $movieType)->get();
     }
 }
