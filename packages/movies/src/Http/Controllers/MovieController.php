@@ -58,7 +58,7 @@ class MovieController extends Controller
         $normalQualityFilm = $request->normal_quality_film;
         $highQualityFilm = $request->high_quality_film;
         $storedKeys = [$imageFilm, $posterFilm, $normalQualityFilm, $highQualityFilm];
-        $sourceType = [];
+
         foreach ($storedKeys as $index => $storedKey) {
             $sourceType = match ($index) {
                 0 => SourceType::IMAGE_FILM,
