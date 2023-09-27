@@ -28,10 +28,11 @@ class AuthController extends Controller
     protected UserRoleRepository $userRoleRepository;
     protected RoleRepository $roleRepository;
 
-    public function __construct(UserRepository     $userRepository,
-                                UserRoleRepository $userRoleRepository,
-                                RoleRepository     $roleRepository)
-    {
+    public function __construct(
+        UserRepository     $userRepository,
+        UserRoleRepository $userRoleRepository,
+        RoleRepository     $roleRepository
+    ) {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->userRepository = $userRepository;
         $this->userRoleRepository = $userRoleRepository;
@@ -285,9 +286,7 @@ class AuthController extends Controller
 
             $accessToken = Token::customPayload($payloadAccessToken, $secret);
             $refreshToken = Token::customPayload($payloadRefreshToken, $secret);
-
         }
         return [$accessToken, $refreshToken, $roleName];
     }
-
 }

@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "Chalkduster";
+    src: local("Chalkduster"), url("./fonts/Chalkduster/Chalkduster.ttf") format("truetype");
+    font-weight: 700;
+}
