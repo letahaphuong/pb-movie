@@ -48,6 +48,7 @@
         },
         "files": [
             "app/Http/common/helpers/SecurityHelper.php",
+            "app/Http/common/helpers/QueryHelper.php",
             "app/Http/common/constants/Constants.php",
             "app/Http/common/constants/ErrorCodes.php"
         ]
