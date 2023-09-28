@@ -155,4 +155,16 @@ class FileService
     {
         return empty($fileName) || Str::startsWith($fileName, 'http');
     }
+
+    public function getPreSignedUrl($fileName, $workingDirMinio)
+    {
+        if (empty($fileName)) {
+            return null;
+        }
+        if (Str::startsWith($fileName, 'http')) {
+            return $fileName;
+        }
+
+        return sprintf('%s/%s/%s/%s', $this->endPoint, $this->bucketNameMinio, $workingDirMinio, $fileName);
+    }
 }

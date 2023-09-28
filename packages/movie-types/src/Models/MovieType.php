@@ -15,6 +15,6 @@ class MovieType extends Model
 
     public function movies()
     {
-        return $this->hasMany(Movie::class);
+        return $this->hasMany(Movie::class, 'movie_type_id');
     }
 }

@@ -4,6 +4,9 @@ namespace Package\Movie\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Package\Category\Models\Category;
+use Package\Country\Models\Country;
+use Package\Media\Models\Media;
 use Package\MovieType\Models\MovieType;
 
 class Movie extends Model
@@ -26,8 +29,18 @@ class Movie extends Model
         'country_id',
     ];
 
-    public function movieType()
+    public function medias()
     {
-        return $this->belongsTo(MovieType::class);
+        return $this->hasMany(Media::class, 'movie_id');
+    }
+
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
+    }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 }
