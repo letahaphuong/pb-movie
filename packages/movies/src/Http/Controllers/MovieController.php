@@ -24,7 +24,14 @@ class MovieController extends Controller
     protected MovieEpisodeRepository $movieEpisodeRepository;
     protected MovieTypeRepository $movieTypeRepository;
     protected const LIMIT = 24;
+    protected const PER_PAGE = 12;
     protected const DEFAULT_MOVIE_TYPE = "Phim chiếu rạp,Phim bộ,Phim lẻ";
+    private static array $sourceTypes = [
+        SourceType::IMAGE_FILM => self::WORKING_IMAGES,
+        SourceType::POSTER_FILM => self::WORKING_IMAGES,
+        SourceType::NORMAL_QUALITY_FILM => self::WORKING_VIDEOS,
+        SourceType::HIGH_QUALITY_FILM => self::WORKING_VIDEOS,
+    ];
 
     public function __construct(MediaService           $mediaService,
                                 FileService            $fileService,
@@ -39,9 +46,32 @@ class MovieController extends Controller
         $this->movieTypeRepository = $movieTypeRepository;
     }
 
-    public function fetchMovieForHomePage(Request $request)
+    public function searchMovie(Request $request)
     {
         Log::info("Search movies");
+
+        $keyword = $request->keyword ?? null;
+        $perPage = $request->per_page ?? self::PER_PAGE;
+        $columns = ['movies.name', 'movies.key_word', 'movies.actor_name', 'movies.name_english'];
+
+        $sortBy = $request->input('sort_by', CREATED_AT);
+        $sortType = $request->input('sort_type', DESC);
+
+        $allowSort = [ASC, DESC];
+        $sortType = in_array($sortType, $allowSort) ? $sortType : DESC;
+
+        $sortBys = [
+            'sort_by' => $sortBy,
+            'sort_type' => $sortType,
+        ];
+        $listMovies = $this->movieRepository->searchMovie($keyword, $columns, $sortBys, $perPage);
+
+        return $this->getPreSignedUrlForSearch($listMovies);
+    }
+
+    public function fetchMovieForHomePage(Request $request)
+    {
+        Log::info("Get data for home page");
         $keyword = $request->keyword ?? self::DEFAULT_MOVIE_TYPE;
         $movieTypes = explode(",", $keyword);
 
@@ -75,20 +105,26 @@ class MovieController extends Controller
         return $movieId;
     }
 
+    private function getPreSignedUrlForSearch($listMovies)
+    {
+        foreach ($listMovies as $movie) {
+            collect($movie->medias)->map(function ($media, $key) {
+                $media['stored_key'] = array_key_exists($media['source_type'], self::$sourceTypes) ?
+                    $this->fileService->getPreSignedUrl($media['stored_key'], self::$sourceTypes[$media['source_type']]) :
+                    $media['stored_key'];
+            });
+        }
+        return $listMovies;
+    }
+
     private function getPreSignedUrl($listData)
     {
         array_walk_recursive($listData, function ($listMovieType, $key) {
-            $sourceTypes = [
-                SourceType::IMAGE_FILM => self::WORKING_IMAGES,
-                SourceType::POSTER_FILM => self::WORKING_IMAGES,
-                SourceType::NORMAL_QUALITY_FILM => self::WORKING_VIDEOS,
-                SourceType::HIGH_QUALITY_FILM => self::WORKING_VIDEOS,
-            ];
             $listMovie = $listMovieType['movies'] ?? [];
             foreach ($listMovie as $movie) {
-                collect($movie['medias'])->map(function ($media, $key) use ($sourceTypes) {
-                    $media['stored_key'] = array_key_exists($media['source_type'], $sourceTypes) ?
-                        $this->fileService->getPreSignedUrl($media['stored_key'], $sourceTypes[$media['source_type']]) :
+                collect($movie['medias'])->map(function ($media, $key) {
+                    $media['stored_key'] = array_key_exists($media['source_type'], self::$sourceTypes) ?
+                        $this->fileService->getPreSignedUrl($media['stored_key'], self::$sourceTypes[$media['source_type']]) :
                         $media['stored_key'];
                 });
             }

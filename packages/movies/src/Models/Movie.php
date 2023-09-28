@@ -43,4 +43,9 @@ class Movie extends Model
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
+
+    public function movieType()
+    {
+        return $this->hasOne(MovieType::class, 'id', 'movie_type_id');
+    }
 }

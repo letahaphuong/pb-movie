@@ -21,6 +21,7 @@ Route::prefix("api/v1/movies")->controller(MovieController::class)->group(functi
         Route::get('movies-with-types', 'fetchMovieWithMovieType');
     });
     Route::get('', 'fetchMovieForHomePage');
+    Route::get('search', 'searchMovie');
 });
 
 Route::prefix("api/v1/movie-episodes")->controller(MovieEpisodeController::class)->group(function () {
