@@ -16,7 +16,7 @@ const ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
 const NAME_PATTERN = '/^[a-zA-Z\sàáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệđìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵ]+$/';
 const USER_NAME = '/^(?=.{4,20}$)(?:[a-zA-Z\d]+(?:(?:\.|-|_)[a-zA-Z\d])*)+$/';
-const DATE_TIME = '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/';
+const DATE_TIME = '/^\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}$/';
 const CREATED_AT = 'created_at';
 const UPDATED_AT = 'updated_at';
 const DESC = 'desc';

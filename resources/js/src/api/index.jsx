@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import {  toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const local = "http://127.0.0.1:8000/api/v1/";
 export const authApi = {
     login: async (data) => {
@@ -20,36 +21,46 @@ export const authApi = {
             return error.response.data;
         }
     },
-    register: async (data) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", local + "auth/register", true);
-
+    register: async (datas) => {
         try {
             const formData = new FormData();
-            formData.append("user_name", data.user_name);
-            formData.append("email", data.email);
-            formData.append("password", data.password);
-            formData.append("date_of_birth", data.date_of_birth);
-            formData.append("full_name", data.full_name);
+            formData.append("user_name", datas.user_name);
+            formData.append("email", datas.email);
+            formData.append("password", datas.password);
+            formData.append("date_of_birth", datas.date_of_birth);
+            formData.append("full_name", datas.full_name);
 
-            xhr.send(formData);
-
-            return new Promise((resolve, reject) => {
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200 || xhr.status === 400) {
-                            const response = JSON.parse(xhr.responseText);
-                            resolve(response);
-                        } else {
-                            const errorResponse = JSON.parse(xhr.responseText);
-                            reject(errorResponse);
-                        }
-                    }
-                };
+            const response = await fetch(local + "auth/register", {
+                method: "POST",
+                body: formData,
             });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                // Xử lý lỗi không thành công
+                if (response.status === 400) {
+                    const errorResponse = await response.json();
+                    console.log(errorResponse.errors);
+                    return errorResponse.errors;
+                } else if (response.status === 500) {
+                    // Lấy thông điệp lỗi 500 từ phản hồi
+                    const errorMessage = await response.text();
+                    console.error(errorMessage);
+                    toast.error("Email Hoặc Username bị trùng");
+                    return errorMessage;
+                } else {
+                    console.error(response.statusText);
+                    throw new Error("Lỗi không xác định");
+                }
+            }
         } catch (error) {
             console.error(error);
-            return Promise.reject(error);
+            throw error;
         }
     },
+    // getInfoUser: async(username) => {
+
+    // }
 };

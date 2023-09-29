@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useDispatch, useSelector } from "react-redux";
 import { Login } from "../../redux/features/authSlice";
+import { toast } from "react-toastify";
 
 function LoginForm() {
     const { isLogin } = useSelector((state) => state.authem);
@@ -32,9 +33,12 @@ function LoginForm() {
     // Sử dụng useEffect để theo dõi sự thay đổi của isLogin
     useEffect(() => {
         if (Object.keys(authemData).length > 0) {
-            isLogin
-                ? alert("Đăng nhập thành công")
-                : alert("Đăng nhập thất bại");
+            if (isLogin) {
+                toast.success("Đăng nhập thành công");
+                setTimeout(() => navigate("/"), 1000);
+            } else {
+                toast.info("Đăng nhập thất bại");
+            }
         }
     }, [isLogin, authemData]);
 
@@ -42,49 +46,52 @@ function LoginForm() {
         console.log(datas);
         dispatch(Login(datas));
     };
-
-    return (
-        <Row align={"center "}>
-            <Col className="authem_form pdbt20" span={6}>
-                <h3>Đăng nhập</h3>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <Controller
-                            name="user_name"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="text"
-                                    placeholder="Tên Đăng Nhập"
-                                />
-                            )}
-                        />
-                        <p>{errors.user_name?.message}</p>
-                    </div>
-                    <div>
-                        <Controller
-                            name="password"
-                            control={control}
-                            render={({ field }) => (
-                                <input
-                                    {...field}
-                                    type="password"
-                                    placeholder="Mật khẩu"
-                                />
-                            )}
-                        />
-                        <p>{errors.password?.message}</p>
-                    </div>
-                    <button type="submit">Đăng nhập</button>
-                    <Link style={{ textAlign: "right" }} to="/register">
-                        {" "}
-                        Đăng Ký
-                    </Link>
-                </form>
-            </Col>
-        </Row>
-    );
+    if (isLogin) {
+        return <h2 style={{ color: "red" }}> Bạn Đã Đăng Nhập </h2>;
+    } else {
+        return (
+            <Row align={"center "}>
+                <Col className="authem_form pdbt20" span={6}>
+                    <h3>Đăng nhập</h3>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div>
+                            <Controller
+                                name="user_name"
+                                control={control}
+                                render={({ field }) => (
+                                    <input
+                                        {...field}
+                                        type="text"
+                                        placeholder="Tên Đăng Nhập"
+                                    />
+                                )}
+                            />
+                            <p>{errors.user_name?.message}</p>
+                        </div>
+                        <div>
+                            <Controller
+                                name="password"
+                                control={control}
+                                render={({ field }) => (
+                                    <input
+                                        {...field}
+                                        type="password"
+                                        placeholder="Mật khẩu"
+                                    />
+                                )}
+                            />
+                            <p>{errors.password?.message}</p>
+                        </div>
+                        <button type="submit">Đăng nhập</button>
+                        <Link style={{ textAlign: "right" }} to="/register">
+                            {" "}
+                            Đăng Ký
+                        </Link>
+                    </form>
+                </Col>
+            </Row>
+        );
+    }
 }
 
 export default LoginForm;
