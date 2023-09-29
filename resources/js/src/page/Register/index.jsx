@@ -5,7 +5,10 @@ import * as yup from "yup";
 import { Col, DatePicker, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Register } from "../../redux/features/authSlice";
-import { format } from "date-fns";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { info } from "sass";
+import { toast } from "react-toastify";
 const schema = yup.object().shape({
     user_name: yup.string().required("Vui lòng nhập tên đăng nhập"),
     email: yup
@@ -39,6 +42,8 @@ const InputField = ({ name, control, placeholder, type, error }) => (
 const RegistrationForm = () => {
     const { register } = useSelector((state) => state.authem);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const alert = Swal;
     const {
         control,
         handleSubmit,
@@ -46,19 +51,36 @@ const RegistrationForm = () => {
     } = useForm({
         resolver: yupResolver(schema),
     });
-
     const [selectedDate, setSelectedDate] = useState(null);
-
     useEffect(() => {
         console.log(register);
+        if (register !== undefined) {
+            if (
+                register.message !== undefined &&
+                register.error_code === undefined
+            ) {
+                toast.success("Chúc mừng bạn đã đăng ký thành công");
+                dispatch(Register(""));
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
+                window.scroll({ top: 0, behavior: "smooth" });
+            } else if (register.error_code === "PBS-0400") {
+                toast.info("Thông tin nhập chưa đúng");
+                window.scroll({ top: 0, behavior: "smooth" });
+            }
+        }
     }, [register]);
     const onSubmit = (data) => {
         // const formattedDate = format(selectedDate, "dd/MM/yyyy"); // Định dạng mẫu của bạn
-        const date_of_birth = format(
-            new Date(selectedDate),
-            "yyyy-dd-mm hh:mm:ss"
-        );
-
+        const birthday = new Date(selectedDate);
+        const date_of_birth =
+            birthday.getFullYear() +
+            "-" +
+            Number(birthday.getMonth() + 1) +
+            "-" +
+            birthday.getDate() +
+            " 00:00:00";
         const registerData = {
             email: data.email,
             user_name: data.user_name,
@@ -69,6 +91,7 @@ const RegistrationForm = () => {
         console.log(registerData);
         dispatch(Register(registerData));
     };
+
     return (
         <Row align={"center "}>
             <Col className="authem_form pdbt20" span={12}>
