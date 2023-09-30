@@ -9,4 +9,6 @@ interface MovieRepository extends RepositoryInterface
     public function fetchMovieWithMovieType($movieType);
 
     public function searchMovie($keywords = '',$columns = [], $sortBys = [], $perPage = 0);
+
+    public function getTotalMoviesByCountryId($id);
 }

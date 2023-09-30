@@ -17,4 +17,6 @@ interface CountryRepository extends RepositoryInterface
     public function exitsById($id);
 
     public function deleteCountry($country);
+
+    public function fetchMoviesByCountry($countryName, array $columns, mixed $limit, float|int $offset);
 }

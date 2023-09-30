@@ -39,4 +39,9 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
             ->orderBy('movies.' . $sortBys['sort_by'], $sortBys['sort_type'])
             ->paginate($perPage);
     }
+
+    public function getTotalMoviesByCountryId($id)
+    {
+        return Movie::where('country_id', $id)->get();
+    }
 }
