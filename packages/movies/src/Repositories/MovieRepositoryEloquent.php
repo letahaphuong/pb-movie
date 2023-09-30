@@ -2,7 +2,6 @@
 
 namespace Package\Movie\Repositories;
 
-use App\Core\CoreModel\CoreModel;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Package\Movie\Models\Movie;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -38,5 +37,15 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
             }])
             ->orderBy('movies.' . $sortBys['sort_by'], $sortBys['sort_type'])
             ->paginate($perPage);
+    }
+
+    public function getTotalMoviesByCountryId($id)
+    {
+        return Movie::where('country_id', $id)->get();
+    }
+
+    public function getTotalMoviesByCategoryId($id)
+    {
+        return Movie::where('category_id', $id)->get();
     }
 }

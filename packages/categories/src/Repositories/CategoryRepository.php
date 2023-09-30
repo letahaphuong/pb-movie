@@ -22,4 +22,6 @@ interface CategoryRepository extends RepositoryInterface
     public function exitsById($id);
 
     public function deleteCategory($category);
+
+    public function fetchMoviesBycategory($categoryName, array $columns, mixed $limit, float|int $offset);
 }

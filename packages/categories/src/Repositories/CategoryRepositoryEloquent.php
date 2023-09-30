@@ -2,6 +2,7 @@
 
 namespace Package\Category\Repositories;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Package\Category\Models\Category;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -60,5 +61,24 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     public function deleteCategory($category)
     {
         $category->delete();
+    }
+
+    public function fetchMoviesBycategory($categoryName, array $columns, mixed $limit, float|int $offset)
+    {
+        return Category::select(array_merge($columns,['categories.id']))
+        ->where(function (Builder $query) use ($columns, $categoryName, $limit, $offset) {
+            scopeOrWhereLike($query, $columns, $categoryName);
+        })
+            ->with(['movies' => function (Builder $query) use ($limit, $offset) {
+                $query->select('movies.id', 'movies.name', 'movies.name_english',
+                    'movies.category_id', 'movies.created_at')
+                    ->orderBy(CREATED_AT, DESC)
+                    ->limit($limit)
+                    ->offset($offset)
+                    ->with(['medias' => function (Builder $query) {
+                        $query->select('medias.id', 'medias.movie_id', 'medias.stored_key', 'medias.source_type');
+                    }]);
+            }])
+            ->get();
     }
 }
