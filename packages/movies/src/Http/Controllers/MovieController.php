@@ -7,6 +7,7 @@ use App\Enums\SourceType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Package\Category\Repositories\CategoryRepository;
 use Package\Country\Repositories\CountryRepository;
 use Package\Media\Services\FileService;
 use Package\Media\Services\MediaService;
@@ -25,6 +26,7 @@ class MovieController extends Controller
     protected MovieEpisodeRepository $movieEpisodeRepository;
     protected MovieTypeRepository $movieTypeRepository;
     protected CountryRepository $countryRepository;
+    protected CategoryRepository $categoryRepository;
     protected const LIMIT = 24;
     protected const PER_PAGE = 12;
     protected const DEFAULT_MOVIE_TYPE = "Phim chiếu rạp,Phim bộ,Phim lẻ";
@@ -43,7 +45,8 @@ class MovieController extends Controller
                                 MovieRepository        $movieRepository,
                                 MovieEpisodeRepository $movieEpisodeRepository,
                                 MovieTypeRepository    $movieTypeRepository,
-                                CountryRepository      $countryRepository)
+                                CountryRepository      $countryRepository,
+                                CategoryRepository     $categoryRepository)
     {
         $this->mediaService = $mediaService;
         $this->fileService = $fileService;
@@ -51,11 +54,40 @@ class MovieController extends Controller
         $this->movieEpisodeRepository = $movieEpisodeRepository;
         $this->movieTypeRepository = $movieTypeRepository;
         $this->countryRepository = $countryRepository;
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function fetchMoviesByCategory($categoryName, Request $request)
+    {
+        Log::info("Fetch movie by category #{$categoryName}");
+
+        $columns = ['categories.name'];
+        $limit = $request->limit ?? self::LIMIT;
+        $current_page = $request->page ?? self::DEFAULT_PAGE;
+        $offset = ($current_page - 1) * $limit;
+
+        $data = $this->categoryRepository->fetchMoviesBycategory($categoryName, $columns, $limit, $offset);
+        $total = $this->movieRepository->getTotalMoviesByCategoryId($data->first()->id)->count();
+        $movies = $data->first()->movies;
+        $data = $this->getPreSignedUrlForSearch($movies);
+
+        $next = self::NO_NEXT_PAGE;
+        $prev = self::NO_PREVIOUS_PAGE;
+        if ($total > $limit) {
+            $next = $current_page < ceil($total / $limit) ? $current_page + 1 : self::NO_NEXT_PAGE;
+            $prev = $current_page > 1 ? $current_page - 1 : self::NO_PREVIOUS_PAGE;
+        }
+
+        return [
+            'category_name' => $categoryName,
+            'data' => $data,
+            'paginate' => compact('current_page', 'limit', 'offset', 'total', 'next', 'prev')
+        ];
     }
 
     public function fetchMoviesByCountry($countryName, Request $request)
     {
-        Log::info("Fetch movie by category #{$countryName}");
+        Log::info("Fetch movie by country #{$countryName}");
 
         $columns = ['countries.name'];
         $limit = $request->limit ?? self::LIMIT;

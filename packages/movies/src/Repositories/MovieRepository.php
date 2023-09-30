@@ -11,4 +11,5 @@ interface MovieRepository extends RepositoryInterface
     public function searchMovie($keywords = '',$columns = [], $sortBys = [], $perPage = 0);
 
     public function getTotalMoviesByCountryId($id);
+    public function getTotalMoviesByCategoryId($id);
 }
