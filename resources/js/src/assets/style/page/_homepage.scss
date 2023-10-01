@@ -1,0 +1,45 @@
+.homepage{
+    .slick-dots{
+        justify-content: right;
+        right: 20px;
+        bottom: 27px;
+        li{
+            button{
+                width: 14px ;
+                height: 14px;
+                border-radius: 50%;
+            }
+        }
+        li.slick-active{
+            width: 14px ;
+            button{
+                background-color: var(--backgroundcolor);
+            }
+
+        }
+        
+    }
+    .ant-tabs-nav{
+        .ant-tabs-nav-list{
+            .ant-tabs-tab{
+                .ant-tabs-tab-btn{
+
+                    color: var(--graytext) ;
+                }
+            }
+            .ant-tabs-tab-active{
+                .ant-tabs-tab-btn{
+
+                    color: var(--yellowcolor) ;
+                }
+            }
+        }
+        .ant-tabs-ink-bar{
+            background:var(--yellowcolor)
+        }
+    }
+   
+    .sidebar{
+        padding-left: 20px;
+    }
+}
