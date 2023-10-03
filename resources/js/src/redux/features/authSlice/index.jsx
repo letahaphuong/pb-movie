@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../../../api/index";
 import Cookies from "js-cookie";
+import { TOKEN } from "../../../constain/token";
 
 
 
 const initialState = {
     isLoading: false,
-    isLogin: false,
+    isLogin: TOKEN.ACCESS_TOKEN ? true : false ,
     authemData: {},
     register: {},
     errors: {},

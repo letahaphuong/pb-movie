@@ -1,19 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MENU_URL, URL_API } from "../../constain/Link";
 
 const HeaderMenu = () => {
     const Menudata = [
         {
             title: "Phim Lẻ",
-            path: "/product/phimle",
+            path: "theloai/phimle",
         },
         {
             title: "Phim Bộ",
-            path: "/product/phimbo",
+            path: "theloai/phimbo",
         },
         {
             title: "Phim chiếu rạp",
-            path: "/product/phimchieurap",
+            path: "theloai/phimchieurap",
         },
         {
             title: "Thể Loại",
@@ -137,11 +138,11 @@ const HeaderMenu = () => {
         },
         {
             title: "Đăng Nhập",
-            path: "/login",
+            path: MENU_URL.LOGIN,
         },
         {
             title: "Đăng Ký",
-            path: "/register",
+            path: MENU_URL.REGISTER,
         },
     ];
 

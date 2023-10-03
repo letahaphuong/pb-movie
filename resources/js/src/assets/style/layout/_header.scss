@@ -1,6 +1,9 @@
 .header{
     background-color: var(--backgroundcolor);
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
     *{
         background-color: var(--backgroundcolor);
     }
@@ -31,9 +34,11 @@
     }
     ul{
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         list-style: none;
         padding: 0;
+        align-items: center;
+        margin: 0;
         li{
             font-size: 12px;
             a{

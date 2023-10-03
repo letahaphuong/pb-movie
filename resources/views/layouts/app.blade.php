@@ -22,7 +22,7 @@
 <body>
     <div id="app">
     </div>
-    <script> {{asset("js/src/index.jsx")}}</script>
+    <script src="{{ asset('js/app.js')}}"></script>
 </body>
 
 </html>

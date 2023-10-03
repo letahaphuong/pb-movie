@@ -6,9 +6,8 @@ import { Col, DatePicker, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Register } from "../../redux/features/authSlice";
 import { useNavigate } from "react-router";
-import Swal from "sweetalert2";
-import { info } from "sass";
 import { toast } from "react-toastify";
+import { MENU_URL } from "../../constain/Link";
 const schema = yup.object().shape({
     user_name: yup.string().required("Vui lòng nhập tên đăng nhập"),
     email: yup
@@ -43,7 +42,6 @@ const RegistrationForm = () => {
     const { register } = useSelector((state) => state.authem);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const alert = Swal;
     const {
         control,
         handleSubmit,
@@ -62,11 +60,11 @@ const RegistrationForm = () => {
                 toast.success("Chúc mừng bạn đã đăng ký thành công");
                 dispatch(Register(""));
                 setTimeout(() => {
-                    navigate("/login");
+                    navigate(MENU_URL.LOGIN);
                 }, 1000);
                 window.scroll({ top: 0, behavior: "smooth" });
             } else if (register.error_code === "PBS-0400") {
-                toast.info("Thông tin nhập chưa đúng");
+                toast.warning("Thông tin nhập chưa đúng");
                 window.scroll({ top: 0, behavior: "smooth" });
             }
         }

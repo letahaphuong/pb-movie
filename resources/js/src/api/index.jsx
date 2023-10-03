@@ -1,7 +1,10 @@
 import axios from "axios";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const local = "http://127.0.0.1:8000/api/v1/";
+import { URL_API } from "../constain/Link";
+
+const local = URL_API;
+
 export const authApi = {
     login: async (data) => {
         const login = {
@@ -22,6 +25,7 @@ export const authApi = {
         }
     },
     register: async (datas) => {
+        console.log(local);
         try {
             const formData = new FormData();
             formData.append("user_name", datas.user_name);
