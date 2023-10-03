@@ -15,6 +15,7 @@ use Package\Movie\Http\Requests\MovieFormRequest;
 use Package\Movie\Repositories\MovieEpisodeRepository;
 use Package\Movie\Repositories\MovieRepository;
 use Package\MovieType\Repositories\MovieTypeRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MovieController extends Controller
 {
@@ -55,6 +56,20 @@ class MovieController extends Controller
         $this->movieTypeRepository = $movieTypeRepository;
         $this->countryRepository = $countryRepository;
         $this->categoryRepository = $categoryRepository;
+    }
+
+    public function getGroupDetail($id)
+    {
+        if (!$this->movieRepository->existsById($id)) {
+            throw new NotFoundHttpException('Movie is not found');
+        }
+
+        $movie = $this->movieRepository->getMovieDetail($id);
+
+        $movie1 = $this->movieRepository->find($id);
+        $movie1->increaseViewCount();
+
+        return $this->getPreSignedUrlForDetail($movie);
     }
 
     public function fetchMoviesByCategory($categoryName, Request $request)
@@ -170,6 +185,18 @@ class MovieController extends Controller
         $this->createMovieEpisode($movieEpisodeData);
 
         return $movieId;
+    }
+
+    private function getPreSignedUrlForDetail($movie)
+    {
+        $medias = $movie->first()->medias;
+
+        collect($medias)->map(function ($media, $key) {
+            $media['stored_key'] = array_key_exists($media['source_type'], self::$sourceTypes) ?
+                $this->fileService->getPreSignedUrl($media['stored_key'], self::$sourceTypes[$media['source_type']]) :
+                $media['stored_key'];
+        });
+        return $movie;
     }
 
     private function getPreSignedUrlForSearch($listMovies)

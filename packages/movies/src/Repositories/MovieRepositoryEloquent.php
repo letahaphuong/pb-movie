@@ -48,4 +48,35 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
     {
         return Movie::where('category_id', $id)->get();
     }
+
+    public function getMovieDetail($id)
+    {
+        return Movie::select('movies.id', 'movies.name', 'movies.name_english', 'movies.key_word', 'movies.director',
+            'movies.release_year', 'movies.description', 'movies.category_id', 'movies.country_id', 'movies.movie_type_id',
+            'movies.time', 'movies.view', 'movies.created_at')
+            ->where('movies.id', $id)
+            ->with([
+                'country' => function (Builder $query) {
+                    $query->select('countries.id', 'countries.name');
+                },
+                'category' => function (Builder $query) {
+                    $query->select('categories.id', 'categories.name');
+                },
+                'movieType' => function (Builder $query) {
+                    $query->select('movie_types.id', 'movie_types.name');
+                },
+                'movieEpisodes' => function (Builder $query) {
+                    $query->select('movie_episodes.id', 'movie_episodes.movie_id', 'movie_episodes.name_episode');
+                },
+                'medias' => function (Builder $query) {
+                    $query->select('medias.id', 'medias.movie_id', 'medias.source_type', 'medias.stored_key');
+                }
+            ])
+            ->get();
+    }
+
+    public function existsById($id)
+    {
+        return Movie::where('id', $id)->exists();
+    }
 }
