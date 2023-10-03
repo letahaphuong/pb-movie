@@ -29,6 +29,12 @@ class Movie extends Model
         'country_id',
     ];
 
+    public function increaseViewCount()
+    {
+        $this->view++;
+        $this->save();
+    }
+
     public function medias()
     {
         return $this->hasMany(Media::class, 'movie_id');
@@ -47,5 +53,10 @@ class Movie extends Model
     public function movieType()
     {
         return $this->hasOne(MovieType::class, 'id', 'movie_type_id');
+    }
+
+    public function movieEpisodes()
+    {
+        return $this->hasMany(MovieEpisode::class, 'movie_id', 'id');
     }
 }

@@ -24,6 +24,7 @@ Route::prefix("api/v1/movies")->controller(MovieController::class)->group(functi
     Route::get('search', 'searchMovie');
     Route::get('countries/{name}', 'fetchMoviesByCountry');
     Route::get('categories/{name}', 'fetchMoviesByCategory');
+    Route::get('{id}', 'getGroupDetail');
 });
 
 Route::prefix("api/v1/movie-episodes")->controller(MovieEpisodeController::class)->group(function () {
