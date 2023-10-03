@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Package\Movie\Http\Controllers\MovieController;
 use Package\Movie\Http\Controllers\MovieEpisodeController;
+use Package\Movie\Http\Controllers\ViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,8 @@ Route::prefix("api/v1/movie-episodes")->controller(MovieEpisodeController::class
     Route::middleware('admin')->group(function () {
         Route::post('', 'addMovieEpisode');
     });
+});
+
+Route::prefix("api/v1/views")->controller(ViewController::class)->group(function () {
+    Route::get('/{movieEpisodeId}', 'uploadViewCountForMovie');
 });

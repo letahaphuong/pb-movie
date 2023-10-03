@@ -14,4 +14,9 @@ class MovieEpisode extends Model
         'name_episode',
         'movie_id',
     ];
+
+    public function view()
+    {
+        return $this->hasOne(View::class, 'movie_episode_id', 'id');
+    }
 }

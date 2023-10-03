@@ -8,18 +8,22 @@ use Illuminate\Support\Facades\Log;
 use Package\Media\Services\MediaService;
 use Package\Movie\Http\Requests\MovieEpisodeFormRequest;
 use Package\Movie\Repositories\MovieEpisodeRepository;
+use Package\Movie\Repositories\ViewRepository;
 
 class MovieEpisodeController extends Controller
 {
     protected MovieEpisodeRepository $movieEpisodeRepository;
+    protected ViewRepository $viewRepository;
     protected MediaService $mediaService;
     protected const DEFAULT_INDEX = 0;
 
     public function __construct(MovieEpisodeRepository $movieEpisodeRepository,
-                                MediaService           $mediaService)
+                                MediaService           $mediaService,
+                                ViewRepository         $viewRepository)
     {
         $this->movieEpisodeRepository = $movieEpisodeRepository;
         $this->mediaService = $mediaService;
+        $this->viewRepository = $viewRepository;
     }
 
     public function addMovieEpisode(MovieEpisodeFormRequest $request)
@@ -27,12 +31,22 @@ class MovieEpisodeController extends Controller
         Log::info("Add new movie episode");
 
         $attribute = $request->all();
-        $movieEpisode = $this->saveMovieEpisode($attribute);
+        $movieEpisodeId = $this->saveMovieEpisode($attribute);
         $this->saveMedia($request);
 
+        $viewData = [
+            'movie_episode_id' => $movieEpisodeId,
+        ];
+        $this->createView($viewData);
+
         return response()->json([
-            "movie_episode_id" => $movieEpisode
+            "movie_episode_id" => $movieEpisodeId
         ], STATUS_CREATED);
+    }
+
+    private function createView($viewData)
+    {
+        $this->viewRepository->create($viewData);
     }
 
     private function saveMedia($request)
