@@ -65,7 +65,7 @@ services:
             MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-miniostorage}
             MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
         volumes:
-            - ${PATH_DATA:-./data}/minio:/data
+            - /data
 networks:
     pbmovie:
         driver: bridge
