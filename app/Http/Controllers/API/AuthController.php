@@ -44,7 +44,7 @@ class AuthController extends Controller
             Log::info("Login with email: " . $request->user_name);
 
             $request->validate([
-                'user_name' => 'required|string|email',
+                'user_name' => 'required|string',
                 'password' => 'required|string',
             ]);
 
