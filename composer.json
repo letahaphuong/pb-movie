@@ -44,7 +44,8 @@
             "Package\\Country\\": "packages/countries/src",
             "Package\\MovieType\\": "packages/movie-types/src",
             "Package\\Movie\\": "packages/movies/src",
-            "Package\\Media\\": "packages/medias/src"
+            "Package\\Media\\": "packages/medias/src",
+            "Package\\Comment\\": "packages/comments/src"
         },
         "files": [
             "app/Http/common/helpers/SecurityHelper.php",
