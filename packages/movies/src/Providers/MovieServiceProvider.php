@@ -7,6 +7,8 @@ use Package\Movie\Repositories\MovieEpisodeRepository;
 use Package\Movie\Repositories\MovieEpisodeRepositoryEloquent;
 use Package\Movie\Repositories\MovieRepository;
 use Package\Movie\Repositories\MovieRepositoryEloquent;
+use Package\Movie\Repositories\ViewRepository;
+use Package\Movie\Repositories\ViewRepositoryEloquent;
 
 class MovieServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,6 @@ class MovieServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MovieRepository::class, MovieRepositoryEloquent::class);
         $this->app->singleton(MovieEpisodeRepository::class, MovieEpisodeRepositoryEloquent::class);
+        $this->app->singleton(ViewRepository::class, ViewRepositoryEloquent::class);
     }
 }

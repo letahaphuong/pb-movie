@@ -53,7 +53,7 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
     {
         return Movie::select('movies.id', 'movies.name', 'movies.name_english', 'movies.key_word', 'movies.director',
             'movies.release_year', 'movies.description', 'movies.category_id', 'movies.country_id', 'movies.movie_type_id',
-            'movies.time', 'movies.view', 'movies.created_at')
+            'movies.time', 'movies.created_at')
             ->where('movies.id', $id)
             ->with([
                 'country' => function (Builder $query) {
@@ -67,6 +67,9 @@ class MovieRepositoryEloquent extends BaseRepository implements MovieRepository
                 },
                 'movieEpisodes' => function (Builder $query) {
                     $query->select('movie_episodes.id', 'movie_episodes.movie_id', 'movie_episodes.name_episode');
+                    $query->with(['view' => function (Builder $query) {
+                        $query->select('views.id', 'views.movie_episode_id', 'views.view');
+                    }]);
                 },
                 'medias' => function (Builder $query) {
                     $query->select('medias.id', 'medias.movie_id', 'medias.source_type', 'medias.stored_key');

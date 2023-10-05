@@ -29,12 +29,6 @@ class Movie extends Model
         'country_id',
     ];
 
-    public function increaseViewCount()
-    {
-        $this->view++;
-        $this->save();
-    }
-
     public function medias()
     {
         return $this->hasMany(Media::class, 'movie_id');

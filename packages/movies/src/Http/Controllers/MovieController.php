@@ -14,6 +14,7 @@ use Package\Media\Services\MediaService;
 use Package\Movie\Http\Requests\MovieFormRequest;
 use Package\Movie\Repositories\MovieEpisodeRepository;
 use Package\Movie\Repositories\MovieRepository;
+use Package\Movie\Repositories\ViewRepository;
 use Package\MovieType\Repositories\MovieTypeRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -28,6 +29,7 @@ class MovieController extends Controller
     protected MovieTypeRepository $movieTypeRepository;
     protected CountryRepository $countryRepository;
     protected CategoryRepository $categoryRepository;
+    protected ViewRepository $viewRepository;
     protected const LIMIT = 24;
     protected const PER_PAGE = 12;
     protected const DEFAULT_MOVIE_TYPE = "Phim chiếu rạp,Phim bộ,Phim lẻ";
@@ -47,7 +49,8 @@ class MovieController extends Controller
                                 MovieEpisodeRepository $movieEpisodeRepository,
                                 MovieTypeRepository    $movieTypeRepository,
                                 CountryRepository      $countryRepository,
-                                CategoryRepository     $categoryRepository)
+                                CategoryRepository     $categoryRepository,
+                                ViewRepository         $viewRepository)
     {
         $this->mediaService = $mediaService;
         $this->fileService = $fileService;
@@ -56,6 +59,7 @@ class MovieController extends Controller
         $this->movieTypeRepository = $movieTypeRepository;
         $this->countryRepository = $countryRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->viewRepository = $viewRepository;
     }
 
     public function getGroupDetail($id)
@@ -65,9 +69,6 @@ class MovieController extends Controller
         }
 
         $movie = $this->movieRepository->getMovieDetail($id);
-
-        $movie1 = $this->movieRepository->find($id);
-        $movie1->increaseViewCount();
 
         return $this->getPreSignedUrlForDetail($movie);
     }
@@ -182,10 +183,20 @@ class MovieController extends Controller
             'name_episode' => $nameEpisode,
         ];
 
-        $this->createMovieEpisode($movieEpisodeData);
+        $movieEpisodeId = $this->createMovieEpisode($movieEpisodeData);
+        $viewData = [
+            'movie_episode_id' => $movieEpisodeId,
+        ];
 
+        $this->createView($viewData);
         return $movieId;
     }
+
+    private function createView($viewData)
+    {
+        $this->viewRepository->create($viewData);
+    }
+
 
     private function getPreSignedUrlForDetail($movie)
     {
