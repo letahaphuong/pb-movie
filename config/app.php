@@ -173,7 +173,8 @@ return [
         \Package\Country\Providers\CountryServiceProvider::class,
         \Package\MovieType\Providers\MovieTypeServiceProvider::class,
         \Package\Movie\Providers\MovieServiceProvider::class,
-        \Package\Media\Providers\MediaServiceProvider::class
+        \Package\Media\Providers\MediaServiceProvider::class,
+        \Package\Comment\Providers\CommentServiceProvider::class
     ])->toArray(),
 
     /*
