@@ -18,4 +18,9 @@ class MovieEpisodeRepositoryEloquent extends BaseRepository implements MovieEpis
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    public function checkExistsById($id)
+    {
+        return MovieEpisode::where('id', $id)->exists();
+    }
 }
