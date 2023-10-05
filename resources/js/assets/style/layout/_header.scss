@@ -1,0 +1,61 @@
+.header{
+    background-color: var(--backgroundcolor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    *{
+        background-color: var(--backgroundcolor);
+    }
+    div{
+
+        align-items: center;
+    }
+    .ant-input-search{
+        border-radius: 24px;
+        overflow: hidden;
+        *{
+            background-color:var(--normaltext);
+            
+        }
+        .ant-input-wrapper {
+            border-radius: 20px;
+            
+        }
+        input{
+            border: none;
+            outline: none;
+            
+
+        }   
+        button{
+            border: none;
+        }
+    }
+    ul{
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        padding: 0;
+        align-items: center;
+        margin: 0;
+        li{
+            font-size: 12px;
+            a{
+                color:#fff;
+                padding:10px;
+
+            }
+            a:focus{
+                background-color: var(--normaltext);
+                border-radius: 12px;
+                color:var(--blackcolor);
+            }
+            + a:focus{
+                background-color: var(--normaltext);
+
+            }
+        }
+
+    }
+}

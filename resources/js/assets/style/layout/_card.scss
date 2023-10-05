@@ -1,0 +1,33 @@
+.listCard{
+    display: flex;
+    div:first-child{
+        width: 30%;
+        img{
+            width: 100%;
+        }
+    }
+    div{
+        h3{
+            color: var(--yellowcolor);
+            font-size: 15px;
+        }
+        p{
+            color:var(--graytext)
+        }
+    }
+
+}
+.gridCard{
+    div{
+        h3{
+            color: var(--yellowcolor);
+            font-size: 15px;
+        }
+        p{
+            color:var(--graytext)
+        }
+        img{
+            width: 100%;
+        }
+    }
+}
