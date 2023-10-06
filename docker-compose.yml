@@ -48,6 +48,24 @@ services:
         volumes:
             - ./:/var/www
             - ./docker-compose/nginx:/etc/nginx/conf.d
+    minio:
+        image: minio/minio:latest
+        container_name: pbmovie-minio
+        restart: unless-stopped
+        command:
+            - server
+            - --console-address
+            - :9001
+            - /data
+        ports:
+            - 9000:9000
+            - 9001:9001
+        environment:
+            MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minio}
+            MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-miniostorage}
+            MINIO_REGION_NAME: ${MINIO_REGION_NAME:-us-east-1}
+        volumes:
+            - /data
 networks:
     pbmovie:
         driver: bridge

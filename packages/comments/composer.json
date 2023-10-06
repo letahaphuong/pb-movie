@@ -1,0 +1,29 @@
+{
+    "name": "packages/comments",
+    "description": "Package Comment",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "phuonglth",
+            "email": "letahaphuong@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Package\\Comment\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\Comment\\Providers\\CommentServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}
