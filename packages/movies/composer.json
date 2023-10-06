@@ -1,0 +1,29 @@
+{
+    "name": "packages/movies",
+    "description": "Package Movie",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "phuonglth",
+            "email": "letahaphuong@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Package\\Movie\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\Movie\\Providers\\MovieServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

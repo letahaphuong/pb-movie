@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \Package\Category\Providers\CategoryServiceProvider::class,
+        \Package\Country\Providers\CountryServiceProvider::class,
+        \Package\MovieType\Providers\MovieTypeServiceProvider::class,
+        \Package\Movie\Providers\MovieServiceProvider::class,
+        \Package\Media\Providers\MediaServiceProvider::class,
+        \Package\Comment\Providers\CommentServiceProvider::class
     ])->toArray(),
 
     /*
