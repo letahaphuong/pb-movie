@@ -16,5 +16,6 @@ use Package\Comment\Http\Controllers\CommentController;
 
 Route::prefix("api/v1/comments")->controller(CommentController::class)->group(function () {
     Route::post('', 'createComment');
+    Route::get('/{id}', 'fetchCommentsByMovieEpisode');
 });
 

@@ -12,7 +12,7 @@ class Comment extends Model
     protected $table = 'comments';
     protected $fillable = [
         'content',
-        'movie_id',
+        'movie_episode_id',
         'user_id'
     ];
 }

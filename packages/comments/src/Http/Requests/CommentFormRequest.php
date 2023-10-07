@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Package\Movie\Models\Movie;
+use Package\Movie\Models\MovieEpisode;
 
 class CommentFormRequest extends FormRequest
 {
@@ -21,10 +21,10 @@ class CommentFormRequest extends FormRequest
             "content" => [
                 'required', 'max:3000'
             ],
-            "movie_id" => [
+            "movie_episode_id" => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    return $this->checkAccessAddComment($value) ? true : $fail("Movie id is not found");
+                    return $this->checkAccessAddComment($value) ? true : $fail("Movie episode id is not found");
                 }
             ],
             "user_id" => [
@@ -47,6 +47,6 @@ class CommentFormRequest extends FormRequest
 
     private function checkAccessAddComment($id)
     {
-        return User::where('id', $id)->exists() || Movie::where('id', $id)->exists();
+        return User::where('id', $id)->exists() || MovieEpisode::where('id', $id)->exists();
     }
 }
