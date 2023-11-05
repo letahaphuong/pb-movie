@@ -12,6 +12,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('{any}', function () {
-    return view('React'); // or wherever your React app is bootstrapped.
-})->where('any', '.*');
+//Route::get('{any}', function () {
+//    return view('React'); // or wherever your React app is bootstrapped.
+//})->where('any', '.*');
